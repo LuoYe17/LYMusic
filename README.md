@@ -78,9 +78,16 @@ npm run dev
 | `npm run build:linux` | Linux 包（AppImage / deb / rpm）           |
 | `npm test`            | 单元测试                                   |
 | `npm run typecheck`   | 类型检查                                   |
-| `npm run lint`        | Oxlint + i18n 键检查                       |
+| `npm run lint`        | Oxlint + i18n 键检查 + SongResult 字段检查 |
+| `npm run verify:docs` | 文档与决策笔记门禁                         |
 
-打 tag `v*` 会走 GitHub Actions 构建 Windows / Linux 产物；Release 说明从 `CHANGELOG.md` 对应 `## [vX.Y.Z]` 段抽取。
+几点容易踩的：
+
+- `lint:i18n`、`lint:song-fields`、`verify:docs` 都是 TS 脚本，用 [bun](https://bun.sh) 跑（`package.json` 里写死的）；本地没装 bun 会与 CI 结果不一致。
+- `src/renderer/auto-imports.d.ts`、`components.d.ts` 由 unplugin 生成且不入库，完整 `typecheck` 前先跑过一次 `npm run build` 或 `npm run dev`。
+- 安装包输出在 `dist/`，electron-vite 构建输出在 `out/`（含 `main` / `preload` / `renderer`）。
+
+打 tag `v*` 会走 GitHub Actions 构建 Windows / Linux 产物；Release 说明从 `CHANGELOG.md` 对应 `## [vX.Y.Z]` 段抽取，完整流程见 [docs/cookbook/release.md](./docs/cookbook/release.md)。
 
 Linux 沙箱相关若启动失败，可先看 `npm run fix-sandbox`。
 
@@ -104,12 +111,12 @@ Linux 沙箱相关若启动失败，可先看 `npm run fix-sandbox`。
 
 ## 文档与协作
 
-| 文档                           | 内容                                   |
-| ------------------------------ | -------------------------------------- |
-| [DEV.md](./DEV.md)             | 目录结构、模块说明、开发约定、打包细节 |
-| [AGENTS.md](./AGENTS.md)       | 贡献与 AI 代理指南；**GitHub Flow**    |
-| [docs/](./docs/)               | 文档索引、子系统契约、操作手册         |
-| [CHANGELOG.md](./CHANGELOG.md) | 版本更新日志                           |
+| 文档                                        | 内容                                     |
+| ------------------------------------------- | ---------------------------------------- |
+| [AGENTS.md](./AGENTS.md)                    | 协作规则、门禁、领域入口                 |
+| [docs/](./docs/)                            | 架构全景、子系统契约、操作手册、文档规范 |
+| [.agents/notes/](./.agents/notes/README.md) | 决策笔记：当初为什么这样、放弃过什么     |
+| [CHANGELOG.md](./CHANGELOG.md)              | 版本更新日志                             |
 
 协作摘要：从最新 `main` 开短分支 → Conventional Commits → 尽早提 PR → CI 通过后合并 → 删分支。完整约定见 [AGENTS.md](./AGENTS.md) 与 [docs/cookbook/github-flow.md](./docs/cookbook/github-flow.md)。
 

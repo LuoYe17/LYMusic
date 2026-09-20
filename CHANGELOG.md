@@ -12,7 +12,7 @@
 - 建立文档分层与决策笔记体系：新增 `docs/AGENTS.md`（文档标准与字数预算）、`.agents/notes/`（决策笔记，含 3 篇历史决策）、`docs/architecture.md` 与 `docs/subsystems/`（子系统契约）、`docs/cookbook/`（GitHub Flow、发版）
 - `AGENTS.md` 瘦身为常备规则，细节下沉到 `docs/`；各源码目录新增模块级 `AGENTS.md`
 - 新增文档门禁 `npm run verify:docs`（笔记结构 + 字数预算），并接入 PR CI
-- 修正过期描述：i18n 已仅剩简体中文、macOS 不在打包与流水线内；`DEV.md` 只保留上手与命令
+- 修正过期描述：i18n 已仅剩简体中文、macOS 不在打包与流水线内；`DEV.md` 删除（技术栈与命令本就与 `README.md` 重复）
 - 目录调整：`docs/github-flow.md` → `docs/cookbook/github-flow.md`
 
 （发版前归入版本号时再拆「新增 / 修复 / 变更 / 移除」。）

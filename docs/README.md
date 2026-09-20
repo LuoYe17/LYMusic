@@ -10,8 +10,7 @@
 | [track-migration.md](./track-migration.md)      | Track / SongResult 迁移进度与字段约定                              |
 | [../.agents/notes/](../.agents/notes/README.md) | 当初为什么这样、放弃了什么                                         |
 | [../AGENTS.md](../AGENTS.md)                    | 贡献与 AI 代理规则（GitHub Flow、文风）                            |
-| [../DEV.md](../DEV.md)                          | 装上就能跑：启动、检查、打包命令                                   |
-| [../README.md](../README.md)                    | 产品简介与免责声明                                                 |
+| [../README.md](../README.md)                    | 产品简介、上手命令、免责声明                                       |
 | [../CHANGELOG.md](../CHANGELOG.md)              | 版本更新日志                                                       |
 
 ## 截图

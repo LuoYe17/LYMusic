@@ -27,4 +27,4 @@ Status: implemented
 
 - 新增文案只改 `src/i18n/lang/zh-CN/*.ts`；`docs/subsystems/i18n.md` 记录了语言收窄后的完整规则。
 - 恢复多语言不再是"打开开关"：语言文件已不在仓库里，要恢复得重新翻译并重设门禁目标语言。
-- 这段历史留在 commit 与本文里；根 `AGENTS.md` 与 `DEV.md` 里"五门语言同步"的旧表述已在文档整理时清理。
+- 这段历史留在 commit 与本文里；根 `AGENTS.md` 与 `DEV.md`（现已并入 `README.md`）里"五门语言同步"的旧表述已随之清理。
