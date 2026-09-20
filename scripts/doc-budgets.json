@@ -1,0 +1,23 @@
+{
+  "AGENTS.md": 2800,
+  "DEV.md": 1850,
+  "docs/README.md": 850,
+  "docs/AGENTS.md": 2250,
+  "docs/architecture.md": 3400,
+  "docs/track-migration.md": 2150,
+  "docs/subsystems/music-source-ipc.md": 1400,
+  "docs/subsystems/playback.md": 1700,
+  "docs/subsystems/desktop-shell.md": 2050,
+  "docs/subsystems/security-boundaries.md": 1650,
+  "docs/subsystems/i18n.md": 1350,
+  "docs/cookbook/github-flow.md": 1200,
+  "docs/cookbook/release.md": 1200,
+  ".agents/notes/README.md": 2500,
+  ".agents/notes/AGENTS.md": 550,
+  "src/main/AGENTS.md": 1250,
+  "src/renderer/AGENTS.md": 850,
+  "src/preload/AGENTS.md": 400,
+  "src/shared/AGENTS.md": 350,
+  "src/i18n/AGENTS.md": 450,
+  "scripts/AGENTS.md": 500
+}
