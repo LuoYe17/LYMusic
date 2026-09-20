@@ -9,7 +9,7 @@
  *   bun scripts/verify-docs.ts --list   # 只打印各文档当前字数与上限
  */
 import { existsSync, readFileSync, readdirSync, statSync } from 'fs';
-import { join, relative } from 'path';
+import { dirname, join, relative, resolve } from 'path';
 
 // import.meta.dirname 在 bun 与 node ≥20 上都可用，方便本地直接用 node 跑
 const ROOT = join(import.meta.dirname, '..');
@@ -167,7 +167,30 @@ if (existsSync(join(ROOT, 'docs/INDEX.md'))) {
   errors.push('docs/INDEX.md — 文档目录本身就是索引，不要集中索引文件');
 }
 
-// —— 检查二：字数预算 ——
+// —— 检查二：Markdown 相对链接可解析（不校验锚点） ——
+function walkMarkdown(dir: string, found: string[] = []): string[] {
+  for (const entry of readdirSync(dir)) {
+    if (entry === 'node_modules' || entry === '.git') continue;
+    const absolute = join(dir, entry);
+    if (statSync(absolute).isDirectory()) walkMarkdown(absolute, found);
+    else if (entry.endsWith('.md')) found.push(absolute);
+  }
+  return found;
+}
+
+for (const file of walkMarkdown(ROOT)) {
+  const rel = relative(ROOT, file).replace(/\\/g, '/');
+  for (const match of readFileSync(file, 'utf8').matchAll(/\]\(([^)\s]+)\)/g)) {
+    const [target] = match[1]!.split('#');
+    // 带 scheme 的一律放过：http(s)、mailto、local:// 等
+    if (!target || /^[a-z][a-z0-9+.-]*:/i.test(target)) continue;
+    if (!existsSync(resolve(dirname(file), decodeURIComponent(target)))) {
+      errors.push(`链接 ${rel} — 指向不存在的文件：${target}（搬家要在同一次改动里改引用）`);
+    }
+  }
+}
+
+// —— 检查三：字数预算 ——
 const budgets = JSON.parse(readFileSync(BUDGETS_PATH, 'utf8')) as Record<string, number>;
 const listOnly = process.argv.includes('--list');
 const rows: string[] = [];

@@ -33,4 +33,4 @@ Status: implemented
 
 - `grep -rn "from 'ly-music-source'" src` 只应命中 `src/main/modules/musicSource.ts`。
 - `src/preload/index.ts` 的 `MUSIC_SOURCE_CHANNELS` 与主进程注册的 `music-source:*` 通道一致。
-- 手动路径见 [docs/subsystems/music-source-ipc.md](../../../docs/subsystems/music-source-ipc.md#验证)。
+- 手动路径见 [docs/subsystems/music-source-ipc.md](../../../../docs/subsystems/music-source-ipc.md#验证)。

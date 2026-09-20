@@ -1,7 +1,7 @@
 <!--
 首先，感谢你的贡献！😄
 本仓库使用 GitHub Flow：从 main 开短分支 → 小步提交 → PR → CI 通过后合并。
-详见 AGENTS.md 与 docs/github-flow.md。
+详见 AGENTS.md 与 docs/cookbook/github-flow.md。
 PR 在维护者审核通过后会合并，谢谢！
 -->
 
