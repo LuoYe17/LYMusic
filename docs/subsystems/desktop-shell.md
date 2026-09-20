@@ -15,7 +15,6 @@
 | `fonts`           | 字体加载                                                | `initializeFonts()`                                                           |
 | `update`          | electron-updater 与 `app-update:*` 通道                 | `setupUpdateHandlers(mainWindow)`                                             |
 | `mpris`           | Linux 桌面媒体控制（其他平台空实现）                    | `initializeMpris` 及三个 update                                               |
-| `deviceInfo`      | 设备标识                                                | 按需调用                                                                      |
 
 ## 生命周期与关闭语义
 
@@ -32,6 +31,8 @@
 
 `app-update:*` 通道负责检查、下载、打开 Release 页、退出并安装；更新状态由 `src/shared/appUpdate.ts` 的类型约束（渲染进程只读状态，不自己判断版本）。
 
+更新源是本仓库的 GitHub Releases：`package.json` 的 `build.publish` 决定打包时生成的 `resources/app-update.yml`，electron-updater 按它读 `latest.yml`。地址一律从 `src/shared/appUpdate.ts` 的 `APP_REPO_URL` 派生。旧的自建检查与第三方代理已删除，网页版因此只保留「官网更新」入口（见[笔记](../../.agents/notes/implemented/process/2026-09-20-update-feed-is-the-repo-releases.md)）。
+
 ## 验证
 
-桌面壳没有自动化测试，改动后按触及面手动验证：托盘菜单项与播放状态同步、快捷键触发、下载进度回报、Linux 上 MPRIS 不重复出现。打包相关改动另见 [release](../cookbook/release.md)。
+桌面壳没有自动化测试：改动后手动过一遍触及面（托盘菜单与播放状态同步、快捷键、下载进度、Linux 上 MPRIS 不重复）。打包改动见 [release](../cookbook/release.md)。

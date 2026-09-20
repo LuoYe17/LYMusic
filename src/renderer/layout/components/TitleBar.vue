@@ -130,6 +130,7 @@ import { useSettingsStore } from '@/store/modules/settings';
 import { isElectron } from '@/utils';
 
 import config from '../../../../package.json';
+import { APP_REPO_URL, APP_UPDATE_RELEASE_URL } from '../../../shared/appUpdate';
 import SearchBar from './SearchBar.vue';
 
 const settingsStore = useSettingsStore();
@@ -137,8 +138,7 @@ const showCloseModal = ref(false);
 const appVersion = config.version;
 const TRAY_TIP_KEY = 'lymusic-tray-close-tip-seen';
 const QISHUI_VIP_URL = 'https://music.douyin.com/';
-const REPO_URL =
-  (config as { homepage?: string }).homepage || 'https://github.com/LuoYe17/AlgerMusicPlayer';
+const REPO_URL = APP_REPO_URL;
 
 const openQishui = () => {
   window.open(QISHUI_VIP_URL, '_blank');
@@ -151,7 +151,7 @@ const openRepo = () => {
 
 const openDownloadPage = () => {
   if (!isElectron) {
-    window.open('https://github.com/LuoYe17/AlgerMusicPlayer/releases', '_blank');
+    window.open(APP_UPDATE_RELEASE_URL, '_blank');
   }
 };
 

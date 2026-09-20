@@ -26,11 +26,7 @@
           </div>
 
           <div class="action-links">
-            <a
-              href="https://github.com/LuoYe17/AlgerMusicPlayer/releases"
-              target="_blank"
-              class="download-link"
-            >
+            <a :href="APP_UPDATE_RELEASE_URL" target="_blank" class="download-link">
               <i class="ri-download-2-line mr-1"></i> 立即下载
             </a>
           </div>
@@ -51,6 +47,7 @@
 import { onMounted, ref } from 'vue';
 
 import { isMobile } from '@/utils';
+import { APP_UPDATE_RELEASE_URL } from '../../shared/appUpdate';
 
 const showDrawer = ref(false);
 
