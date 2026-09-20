@@ -13,8 +13,7 @@
 | [cookbook/](cookbook/)                       | 带验证步骤的一步步操作                           | 设计理由（链到笔记）                     |
 | [.agents/notes/](../.agents/notes/README.md) | 当初为什么这样、放弃了什么、代价是什么           | 已交付后的迁移计划与验收清单             |
 | [track-migration.md](track-migration.md)     | 领域类型分工与在飞的迁移进度                     | 已完成部分的历史流水                     |
-| [DEV.md](../DEV.md)                          | 装上就能跑：环境、命令、打包                     | 结构说明（链 architecture）、逐模块职责  |
-| [README.md](../README.md)                    | 产品简介、功能、免责声明                         | 贡献流程（链 AGENTS.md）                 |
+| [README.md](../README.md)                    | 产品简介、能力、上手命令、免责声明               | 贡献流程（链 AGENTS.md）、结构说明       |
 | [CHANGELOG.md](../CHANGELOG.md)              | 用户可见的版本变更                               | 内部重构细节                             |
 
 放置原则：bug 成因 → `bug-fix` 笔记；设计理由 → 笔记；操作步骤 → cookbook；类型与契约 → subsystems；常备规则 → 根 AGENTS.md。
@@ -44,7 +43,7 @@
 上限清单在 [scripts/doc-budgets.json](../scripts/doc-budgets.json)，`npm run verify:docs` 会拒绝超限、拒绝「清单里有、文件却不在」（改名或删除后要同一次改掉清单），也会拒绝指向不存在文件的相对链接。
 
 - 计数方式：**去空白后的字符数**。中文按字算，`wc -w` 对中文没有意义。
-- 机器维护的区块（CodeGraph 段、HTML 注释）不计入。
+- 机器维护的区块（HTML 注释）不计入。
 - 预算只覆盖代理会反复改的常备文档；`README.md` 这类产品文档不在清单里。
 
 超限了按顺序处理：

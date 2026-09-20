@@ -40,11 +40,9 @@ const NOTE_FILE_NAME = /^(\d{4})-(\d{2})-(\d{2})-([a-z0-9]+(?:-[a-z0-9]+)*)\.md$
 
 const errors: string[] = [];
 
-/** 机器维护的区块不计入预算（HTML 注释，以及 CodeGraph 段） */
+/** 机器维护的区块不计入预算（HTML 注释） */
 function budgetText(raw: string): string {
-  return raw
-    .replace(/<!-- CODEGRAPH_START -->[\s\S]*?<!-- CODEGRAPH_END -->/g, '')
-    .replace(/<!--[\s\S]*?-->/g, '');
+  return raw.replace(/<!--[\s\S]*?-->/g, '');
 }
 
 /** 去空白字符数：中文按字算，`wc -w` 对中文没有意义 */
