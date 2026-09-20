@@ -83,6 +83,7 @@ npm run dev
 
 几点容易踩的：
 
+- 首次 `npm run dev` 会自动补 electron 二进制（electron 43 不再用 postinstall 下载它）；国内网络下载失败时脚本会自动改走 npmmirror，也可以常设 `npm config set electron_mirror https://npmmirror.com/mirrors/electron/`。
 - 仓库带 `.npmrc`（`allow-git=root`）：`ly-music-source` 是 git 依赖，npm 12 默认拒绝拉取，删了 `.npmrc` 就会 `EALLOWGIT`。
 - 门禁脚本（`lint:i18n`、`lint:song-fields`、`verify:docs`）是 TS 文件，用 node 直接跑：Node ≥22.18 原生支持类型抹除，不需要额外工具链（CI 用 Node 24）。
 - `src/renderer/auto-imports.d.ts`、`components.d.ts` 由 unplugin 生成且不入库，完整 `typecheck` 前先跑过一次 `npm run build` 或 `npm run dev`。
