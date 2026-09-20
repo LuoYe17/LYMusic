@@ -7,6 +7,10 @@
 
 ## [未发布]
 
+### 修复
+
+- `npm install` / `npm ci` 在 npm 12 下报 `EALLOWGIT`：新增 `.npmrc`（`allow-git=root`）放行直接 git 依赖 `ly-music-source`
+
 ### 文档
 
 - 建立文档分层与决策笔记体系：新增 `docs/AGENTS.md`（文档标准与字数预算）、`.agents/notes/`（决策笔记，含 3 篇历史决策）、`docs/architecture.md` 与 `docs/subsystems/`（子系统契约）、`docs/cookbook/`（GitHub Flow、发版）

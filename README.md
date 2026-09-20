@@ -83,6 +83,7 @@ npm run dev
 
 几点容易踩的：
 
+- 仓库带 `.npmrc`（`allow-git=root`）：`ly-music-source` 是 git 依赖，npm 12 默认拒绝拉取，删了 `.npmrc` 就会 `EALLOWGIT`。
 - `lint:i18n`、`lint:song-fields`、`verify:docs` 都是 TS 脚本，用 [bun](https://bun.sh) 跑（`package.json` 里写死的）；本地没装 bun 会与 CI 结果不一致。
 - `src/renderer/auto-imports.d.ts`、`components.d.ts` 由 unplugin 生成且不入库，完整 `typecheck` 前先跑过一次 `npm run build` 或 `npm run dev`。
 - 安装包输出在 `dist/`，electron-vite 构建输出在 `out/`（含 `main` / `preload` / `renderer`）。
