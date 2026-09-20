@@ -66,6 +66,7 @@ PR 在维护者审核通过后会合并，谢谢！
 - [ ] 基于较新的 `main`，范围单一，无无关大重构
 - [ ] Commit / PR 标题符合 Conventional Commits
 - [ ] 文档已补充或无须补充（README / DEV / AGENTS / docs）
+- [ ] 非平凡取舍已留 Agent Note（`.agents/notes/`）或已说明豁免
 - [ ] 代码演示已提供或无须提供
 - [ ] TypeScript 定义已补充或无须补充
 - [ ] 本地或 CI：lint / typecheck / i18n（触及面）通过
