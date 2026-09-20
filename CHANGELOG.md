@@ -7,6 +7,10 @@
 
 ## [未发布]
 
+### 变更
+
+- 许可证由 MIT 改为 **GPL-3.0-only**：打包进产物的音源库 `ly-music-source` 是 GPL-3.0；上游 AlgerMusicPlayer 的 MIT 声明与原文保留在新增的 `THIRD_PARTY_NOTICES.md`，`package.json` 补上 `license` 字段
+
 ### 修复
 
 - `npm install` / `npm ci` 在 npm 12 下报 `EALLOWGIT`：新增 `.npmrc`（`allow-git=root`）放行直接 git 依赖 `ly-music-source`

@@ -8,7 +8,7 @@
 | 作者 | [落叶 @LuoYe17](https://github.com/LuoYe17)                                                    |
 | 仓库 | https://github.com/LuoYe17/AlgerMusicPlayer                                                    |
 | 版本 | [Releases](https://github.com/LuoYe17/AlgerMusicPlayer/releases) · [CHANGELOG](./CHANGELOG.md) |
-| 许可 | MIT                                                                                            |
+| 许可 | GPL-3.0-only（上游部分为 MIT，见 [THIRD_PARTY_NOTICES](./THIRD_PARTY_NOTICES.md)）             |
 
 > **开发中。** 功能、界面和数据结构可能随时调整。重要数据请自行备份。
 
@@ -126,5 +126,6 @@ Linux 沙箱相关若启动失败，可先看 `npm run fix-sandbox`。
 ## 声明
 
 - 仅供学习与个人交流，**禁止用于商业用途**。请支持官方正版（如 [汽水音乐](https://music.douyin.com/)）。
+- 本仓库按 **GPL-3.0-only** 分发：因为打包进产物的音源库 [`ly-music-source`](https://github.com/LuoYe17/ly-music-source) 是 GPL-3.0。上游 AlgerMusicPlayer 部分为 MIT，两份声明都在 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。
 - 上游版权与贡献归 [algerkong/AlgerMusicPlayer](https://github.com/algerkong/AlgerMusicPlayer) 及其贡献者。
 - 本仓库改动由维护者负责，不保证与上游功能一一对应或持续兼容。
