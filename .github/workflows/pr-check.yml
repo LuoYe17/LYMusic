@@ -59,11 +59,8 @@ jobs:
           node-version: 24
           cache: npm
 
-      # lint:i18n 脚本用 bun 跑（package.json: "bun scripts/check_i18n.ts"），
-      # CI 默认环境没有 bun 会报 sh: bun: not found
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-
+      # lint:i18n / lint:song-fields / verify:docs 都是 TS 脚本，用 node 直接跑
+      # （Node ≥22.18 原生支持类型抹除，CI 用 24），不再需要 bun
       - name: Install dependencies
         run: npm ci
 

@@ -57,7 +57,7 @@
 ## 命令
 
 ```bash
-bun scripts/check_song_field_reads.ts   # 或 npm run lint:song-fields
+node scripts/check_song_field_reads.ts   # 或 npm run lint:song-fields
 npm test
 ```
 

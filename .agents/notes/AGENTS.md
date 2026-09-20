@@ -8,4 +8,4 @@
 
 `rejected/` 的笔记一经写入即冻结：只在状态行补否决原因，正文不再改。
 
-写完跑 `npm run verify:docs`（等同 `bun scripts/verify-docs.ts`），它会校验状态行、必需章节、分类目录与文件名日期。
+写完跑 `npm run verify:docs`（等同 `node scripts/verify-docs.ts`），它会校验状态行、必需章节、分类目录与文件名日期。

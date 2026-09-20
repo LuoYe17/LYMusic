@@ -26,7 +26,7 @@ Status: implemented
 ## 影响
 
 - 新增检查要同时改 `package.json` 与 `.github/workflows/pr-check.yml`，两处都指向脚本名，不重复写命令。
-- 本地与 CI 走同一套脚本，`bun` 是这些 TS 脚本的运行时依赖（CI 里有 setup-bun 步骤）。
+- 本地与 CI 走同一套脚本；脚本是 TS 文件，最初用 `bun` 跑，后来改成 `node` 直接跑（见[门禁脚本改用 node](2026-09-20-gates-run-on-node.md)），现在两者都能跑。
 - 门禁的允许清单（`LEGACY_ALLOW` / `ALLOW_PREFIXES`）是存量豁免，不是新增入口：往里加条目要在 PR 里说明。
 
 ## 验证

@@ -10,6 +10,7 @@
 ### 修复
 
 - `npm install` / `npm ci` 在 npm 12 下报 `EALLOWGIT`：新增 `.npmrc`（`allow-git=root`）放行直接 git 依赖 `ly-music-source`
+- 门禁脚本（i18n / 字段读取 / 文档）改用 node 直接跑 TypeScript，不再要求机器上装 bun；没装 bun 时的 `pre-commit` 失败问题随之消失
 
 ### 文档
 

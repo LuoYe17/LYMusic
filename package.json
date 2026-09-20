@@ -5,13 +5,16 @@
   "author": "落叶🍂 (@LuoYe17)",
   "main": "./out/main/index.js",
   "homepage": "https://github.com/LuoYe17/AlgerMusicPlayer",
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "prepare": "husky",
     "format": "prettier --write ./src",
     "lint": "oxlint ./src --fix && npm run lint:i18n && npm run lint:song-fields",
-    "lint:i18n": "bun scripts/check_i18n.ts",
-    "lint:song-fields": "bun scripts/check_song_field_reads.ts",
-    "verify:docs": "bun scripts/verify-docs.ts",
+    "lint:i18n": "node scripts/check_i18n.ts",
+    "lint:song-fields": "node scripts/check_song_field_reads.ts",
+    "verify:docs": "node scripts/verify-docs.ts",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
