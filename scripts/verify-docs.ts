@@ -57,6 +57,14 @@ function isValidDate(year: number, month: number, day: number): boolean {
   );
 }
 
+/**
+ * 按行拆分：Windows 检出可能是 CRLF（core.autocrlf），不规范化会让
+ * 空行判断与 `Status:` 精确匹配全部误报——门禁不该依赖检出设置。
+ */
+function readLines(file: string): string[] {
+  return readFileSync(file, 'utf8').split(/\r?\n/);
+}
+
 function checkNote(absolute: string): void {
   const rel = relative(ROOT, absolute).replace(/\\/g, '/');
   const segments = relative(NOTES_ROOT, absolute).replace(/\\/g, '/').split('/');
@@ -89,7 +97,7 @@ function checkNote(absolute: string): void {
     return;
   }
 
-  const lines = readFileSync(absolute, 'utf8').split('\n');
+  const lines = readLines(absolute);
   if (!/^# Agent Note: \S/.test(lines[0] ?? '')) {
     fail('第 1 行必须是 `# Agent Note: <标题>`', 1);
   }
