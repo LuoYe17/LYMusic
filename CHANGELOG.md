@@ -13,6 +13,7 @@
 
 ### 修复
 
+- 头像/封面 403：`getImgUrl` 不再给带查询串或带签名的图片地址拼 `?param=`（抽到 `utils/imgUrl.ts`，补 7 条测试）
 - `npm run dev` 报 `Electron uninstall`：electron 43 不再用 `postinstall` 下二进制，改为 dev/start 前自动补齐（新增 `scripts/ensure-electron.mjs`，默认源失败自动改走 npmmirror）
 - 自动更新源指向错仓库：`build.publish`、更新地址常量与各 UI 入口统一改指向 `LuoYe17/LYMusic`；删除渲染进程经第三方代理的自建检查（含 `VITE_GITHUB_TOKEN`）与两个只服务旧链接的死组件
 - `npm install` / `npm ci` 在 npm 12 下报 `EALLOWGIT`：新增 `.npmrc`（`allow-git=root`）放行直接 git 依赖 `ly-music-source`
