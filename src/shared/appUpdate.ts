@@ -8,8 +8,10 @@ export const APP_UPDATE_STATUS = {
   error: 'error'
 } as const;
 
-export const APP_UPDATE_RELEASE_URL =
-  'https://github.com/LuoYe17/AlgerMusicPlayer/releases/latest';
+/** 仓库地址：品牌入口、手动下载页、更新说明都从这里派生 */
+export const APP_REPO_URL = 'https://github.com/LuoYe17/LYMusic';
+
+export const APP_UPDATE_RELEASE_URL = `${APP_REPO_URL}/releases/latest`;
 
 export type AppUpdateStatus = (typeof APP_UPDATE_STATUS)[keyof typeof APP_UPDATE_STATUS];
 

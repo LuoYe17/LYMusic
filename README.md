@@ -8,7 +8,7 @@
 | 作者 | [落叶 @LuoYe17](https://github.com/LuoYe17)                                                    |
 | 仓库 | https://github.com/LuoYe17/AlgerMusicPlayer                                                    |
 | 版本 | [Releases](https://github.com/LuoYe17/AlgerMusicPlayer/releases) · [CHANGELOG](./CHANGELOG.md) |
-| 许可 | MIT                                                                                            |
+| 许可 | GPL-3.0-only（上游部分为 MIT，见 [THIRD_PARTY_NOTICES](./THIRD_PARTY_NOTICES.md)）             |
 
 > **开发中。** 功能、界面和数据结构可能随时调整。重要数据请自行备份。
 
@@ -78,9 +78,17 @@ npm run dev
 | `npm run build:linux` | Linux 包（AppImage / deb / rpm）           |
 | `npm test`            | 单元测试                                   |
 | `npm run typecheck`   | 类型检查                                   |
-| `npm run lint`        | Oxlint + i18n 键检查                       |
+| `npm run lint`        | Oxlint + i18n 键检查 + SongResult 字段检查 |
+| `npm run verify:docs` | 文档与决策笔记门禁                         |
 
-打 tag `v*` 会走 GitHub Actions 构建 Windows / Linux 产物；Release 说明从 `CHANGELOG.md` 对应 `## [vX.Y.Z]` 段抽取。
+几点容易踩的：
+
+- 仓库带 `.npmrc`（`allow-git=root`）：`ly-music-source` 是 git 依赖，npm 12 默认拒绝拉取，删了 `.npmrc` 就会 `EALLOWGIT`。
+- 门禁脚本（`lint:i18n`、`lint:song-fields`、`verify:docs`）是 TS 文件，用 node 直接跑：Node ≥22.18 原生支持类型抹除，不需要额外工具链（CI 用 Node 24）。
+- `src/renderer/auto-imports.d.ts`、`components.d.ts` 由 unplugin 生成且不入库，完整 `typecheck` 前先跑过一次 `npm run build` 或 `npm run dev`。
+- 安装包输出在 `dist/`，electron-vite 构建输出在 `out/`（含 `main` / `preload` / `renderer`）。
+
+打 tag `v*` 会走 GitHub Actions 构建 Windows / Linux 产物；Release 说明从 `CHANGELOG.md` 对应 `## [vX.Y.Z]` 段抽取，完整流程见 [docs/cookbook/release.md](./docs/cookbook/release.md)。
 
 Linux 沙箱相关若启动失败，可先看 `npm run fix-sandbox`。
 
@@ -104,19 +112,20 @@ Linux 沙箱相关若启动失败，可先看 `npm run fix-sandbox`。
 
 ## 文档与协作
 
-| 文档                           | 内容                                   |
-| ------------------------------ | -------------------------------------- |
-| [DEV.md](./DEV.md)             | 目录结构、模块说明、开发约定、打包细节 |
-| [AGENTS.md](./AGENTS.md)       | 贡献与 AI 代理指南；**GitHub Flow**    |
-| [docs/](./docs/)               | 文档索引、Flow 速查、Track 迁移路线图  |
-| [CHANGELOG.md](./CHANGELOG.md) | 版本更新日志                           |
+| 文档                                        | 内容                                     |
+| ------------------------------------------- | ---------------------------------------- |
+| [AGENTS.md](./AGENTS.md)                    | 协作规则、门禁、领域入口                 |
+| [docs/](./docs/)                            | 架构全景、子系统契约、操作手册、文档规范 |
+| [.agents/notes/](./.agents/notes/README.md) | 决策笔记：当初为什么这样、放弃过什么     |
+| [CHANGELOG.md](./CHANGELOG.md)              | 版本更新日志                             |
 
-协作摘要：从最新 `main` 开短分支 → Conventional Commits → 尽早提 PR → CI 通过后合并 → 删分支。完整约定见 [AGENTS.md](./AGENTS.md) 与 [docs/github-flow.md](./docs/github-flow.md)。
+协作摘要：从最新 `main` 开短分支 → Conventional Commits → 尽早提 PR → CI 通过后合并 → 删分支。完整约定见 [AGENTS.md](./AGENTS.md) 与 [docs/cookbook/github-flow.md](./docs/cookbook/github-flow.md)。
 
 ---
 
 ## 声明
 
 - 仅供学习与个人交流，**禁止用于商业用途**。请支持官方正版（如 [汽水音乐](https://music.douyin.com/)）。
+- 本仓库按 **GPL-3.0-only** 分发：因为打包进产物的音源库 [`ly-music-source`](https://github.com/LuoYe17/ly-music-source) 是 GPL-3.0。上游 AlgerMusicPlayer 部分为 MIT，两份声明都在 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。
 - 上游版权与贡献归 [algerkong/AlgerMusicPlayer](https://github.com/algerkong/AlgerMusicPlayer) 及其贡献者。
 - 本仓库改动由维护者负责，不保证与上游功能一一对应或持续兼容。

@@ -4,7 +4,7 @@
   >
     <img :src="appIcon" alt="LYMusic" class="about-logo" />
     <h1 class="about-title">LYMusic</h1>
-    <p class="about-ver">v{{ updateInfo.currentVersion }}</p>
+    <p class="about-ver">v{{ currentVersion }}</p>
 
     <p class="about-desc">一款简洁的桌面音乐播放器。支持汽水音乐在线搜播，开源免费，请支持正版。</p>
 
@@ -21,14 +21,14 @@
     </a>
 
     <div class="flex flex-wrap items-center justify-center gap-3 mb-10">
-      <ui-button :disabled="checking" @click="checkForUpdates(true)">
+      <ui-button v-if="isElectron" :disabled="checking" @click="checkForUpdates(true)">
         <i v-if="checking" class="ri-loader-4-line animate-spin" />
         {{ checking ? t('settings.about.checking') : t('settings.about.checkUpdate') }}
       </ui-button>
-      <ui-button v-if="updateInfo.hasUpdate" @click="openReleasePage">
-        {{ t('settings.about.gotoUpdate') }} {{ updateInfo.latestVersion }}
+      <ui-button v-if="hasAppUpdate" @click="openReleasePage">
+        {{ t('settings.about.gotoUpdate') }} {{ latestVersion }}
       </ui-button>
-      <ui-button v-if="hasManualUpdateFallback" variant="outline" @click="openManualUpdatePage">
+      <ui-button v-if="showManualUpdate" variant="outline" @click="openManualUpdatePage">
         {{ t('settings.about.manualUpdate') }}
       </ui-button>
     </div>
@@ -70,10 +70,12 @@ import qishuiIcon from '@/assets/qishui-icon.png';
 import { Button as UiButton } from '@/components/ui/button';
 import { useSettingsStore } from '@/store/modules/settings';
 import { isElectron } from '@/utils';
-import { checkUpdate, UpdateResult } from '@/utils/update';
-
 import config from '../../../../../package.json';
-import { APP_UPDATE_STATUS, hasAvailableAppUpdate } from '../../../../shared/appUpdate';
+import {
+  APP_UPDATE_RELEASE_URL,
+  APP_UPDATE_STATUS,
+  hasAvailableAppUpdate
+} from '../../../../shared/appUpdate';
 import { SETTINGS_DATA_KEY, SETTINGS_MESSAGE_KEY } from '../keys';
 
 const { t } = useI18n();
@@ -82,38 +84,15 @@ const setData = inject(SETTINGS_DATA_KEY)!;
 const message = inject(SETTINGS_MESSAGE_KEY)!;
 
 const checking = ref(false);
-const webUpdateInfo = ref<UpdateResult>({
-  hasUpdate: false,
-  latestVersion: '',
-  currentVersion: config.version,
-  releaseInfo: null
-});
 
 const appUpdateState = computed(() => settingsStore.appUpdateState);
 const hasAppUpdate = computed(() => hasAvailableAppUpdate(appUpdateState.value));
-const hasManualUpdateFallback = computed(
-  () => isElectron && appUpdateState.value.status === APP_UPDATE_STATUS.error
+const currentVersion = computed(() => appUpdateState.value.currentVersion || config.version);
+const latestVersion = computed(() => appUpdateState.value.availableVersion ?? '');
+/** 网页预览版没有自动更新，只给官网入口；桌面端在检查失败时同样给 */
+const showManualUpdate = computed(
+  () => !isElectron || appUpdateState.value.status === APP_UPDATE_STATUS.error
 );
-
-const updateInfo = computed<UpdateResult>(() => {
-  if (!isElectron) {
-    return webUpdateInfo.value;
-  }
-
-  return {
-    hasUpdate: hasAppUpdate.value,
-    latestVersion: appUpdateState.value.availableVersion ?? '',
-    currentVersion: appUpdateState.value.currentVersion || config.version,
-    releaseInfo: appUpdateState.value.availableVersion
-      ? {
-          tag_name: appUpdateState.value.availableVersion,
-          body: appUpdateState.value.releaseNotes,
-          html_url: appUpdateState.value.releasePageUrl,
-          assets: []
-        }
-      : null
-  };
-});
 
 const QISHUI_VIP_URL = 'https://music.douyin.com/';
 
@@ -124,28 +103,15 @@ const openQishui = () => {
 const checkForUpdates = async (isClick = false) => {
   checking.value = true;
   try {
-    if (isElectron) {
-      const result = await window.api.checkAppUpdate(isClick);
-      settingsStore.setAppUpdateState(result);
+    const result = await window.api.checkAppUpdate(isClick);
+    settingsStore.setAppUpdateState(result);
 
-      if (hasAvailableAppUpdate(result)) {
-        if (isClick) settingsStore.setShowUpdateModal(true);
-      } else if (result.status === APP_UPDATE_STATUS.notAvailable && isClick) {
-        message.success(t('settings.about.latest'));
-      } else if (result.status === APP_UPDATE_STATUS.error && isClick) {
-        message.error(result.errorMessage || t('settings.about.messages.checkError'));
-      }
-      return;
-    }
-
-    const result = await checkUpdate(config.version);
-    if (result) {
-      webUpdateInfo.value = result;
-      if (!result.hasUpdate && isClick) {
-        message.success(t('settings.about.latest'));
-      }
-    } else if (isClick) {
+    if (hasAvailableAppUpdate(result)) {
+      if (isClick) settingsStore.setShowUpdateModal(true);
+    } else if (result.status === APP_UPDATE_STATUS.notAvailable && isClick) {
       message.success(t('settings.about.latest'));
+    } else if (result.status === APP_UPDATE_STATUS.error && isClick) {
+      message.error(result.errorMessage || t('settings.about.messages.checkError'));
     }
   } catch (error) {
     console.error('检查更新失败:', error);
@@ -162,7 +128,7 @@ const openReleasePage = () => {
     settingsStore.setShowUpdateModal(true);
     return;
   }
-  window.open(updateInfo.value.releaseInfo?.html_url || setData.value.authorUrl);
+  window.open(APP_UPDATE_RELEASE_URL);
 };
 
 const openManualUpdatePage = async () => {
@@ -170,7 +136,7 @@ const openManualUpdatePage = async () => {
     await window.api.openAppUpdatePage();
     return;
   }
-  window.open(updateInfo.value.releaseInfo?.html_url || setData.value.authorUrl);
+  window.open(APP_UPDATE_RELEASE_URL);
 };
 
 const openAuthor = () => {
@@ -178,7 +144,7 @@ const openAuthor = () => {
 };
 
 const openReleases = () => {
-  window.open('https://github.com/LuoYe17/AlgerMusicPlayer/releases');
+  window.open(APP_UPDATE_RELEASE_URL);
 };
 
 defineExpose({ checkForUpdates });

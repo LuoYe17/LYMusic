@@ -1,6 +1,6 @@
-# GitHub Flow 操作速查
+# 操作手册：GitHub Flow 命令速查
 
-完整原则与禁止项见根目录 [AGENTS.md](../AGENTS.md)。本文只放日常命令清单。
+原则、禁止项与 commit 文风见根目录 [AGENTS.md](../../AGENTS.md)。本文只放日常命令。
 
 ## 一天标准路径
 
@@ -62,9 +62,10 @@ git push --force-with-lease
 ## 合并前自检
 
 ```bash
-npm run lint
-npm run build          # 生成 auto-import d.ts 后再 typecheck 更稳
+npm run lint            # oxlint + i18n + 字段读取门禁
+npm run build           # 生成 auto-import d.ts 后再 typecheck 更稳
 npm run typecheck
+npm run verify:docs     # 文档与决策笔记门禁
 ```
 
 PR 标题示例：`feat(search): 空搜索也给点默认歌听听`（中文说明、不要 emoji）

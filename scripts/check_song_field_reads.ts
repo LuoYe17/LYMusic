@@ -10,7 +10,8 @@
 import { readdirSync, readFileSync, statSync } from 'fs';
 import { join, relative } from 'path';
 
-const ROOT = join(import.meta.dir, '..');
+// import.meta.dirname 在 node ≥20.11 与 bun 上都可用，方便两个运行时都能直接跑
+const ROOT = join(import.meta.dirname, '..');
 const SRC = join(ROOT, 'src');
 
 /** 相对 src/ 的路径前缀或文件；命中则跳过 */
